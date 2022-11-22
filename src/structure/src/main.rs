@@ -7,7 +7,9 @@ fn main() {
     //     active: true,
     //     sign_in_count_: 1,
     // };
-    change_struct();
+    // change_struct();
+    // no_lifetimes();
+    test_debug();
 }
 
 struct User {
@@ -44,4 +46,37 @@ fn change_struct() {
     println!("{}", u1.active);
     // 这行会报错，因为u1有部分数据已经被重新绑定到u2
     // println!("{}", u1);
+}
+
+// 执行下面的代码，编译器会提示需要生命周期
+// 原因是 UserOne 结构体中的数据是 “借用” 的
+// struct UserOne {
+//     username: &str,
+//     email: &str,
+// }
+
+// fn no_lifetimes() {
+//     let u1 = UserOne {
+//         username: "Ho",
+//         email: "123@qq.com",
+//     };
+// }
+
+
+#[derive(Debug)]
+struct Rect {
+    width: u32,
+    height: u32,
+}
+
+// 打印结构体的方式
+fn test_debug(){
+    let r1 = Rect{
+        width:200,
+        height:50
+    };
+    // 打印结构体的方式一，在结构体上使用 derive，然后通过 {:#?} 打印
+    // println!("r1 is {:#?}", r1);
+    // 打印结构体的方式二：在结构体上使用 derive，使用 dbg! 宏 打印
+    dbg!(&r1);
 }
