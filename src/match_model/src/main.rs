@@ -1,6 +1,7 @@
 fn main() {
     // match_fn();
-    value_in_cents(Coin::Quarter(UsState::Alaska));
+    // value_in_cents(Coin::Quarter(UsState::Alaska));
+    matches();
 }
 
 enum Direction {
@@ -45,4 +46,16 @@ fn value_in_cents(coin: Coin) -> u8 {
             25
         }
     }
+}
+
+// matches! 宏
+enum MyEnum {
+    Foo,
+    Bar,
+}
+
+fn matches() {
+    let v = vec![MyEnum::Foo, MyEnum::Bar, MyEnum::Foo];
+    //报错 v.iter().filter(|x| x == MyEnum::Foo);
+    v.iter().filter(|x| matches!(x, MyEnum::Foo));
 }
